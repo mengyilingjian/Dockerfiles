@@ -1,0 +1,6 @@
+/nginx/logs/
+/nginx/conf/vhosts/
+/openresty/logs/
+/php/php7.3.32/logs/
+/php/php8.0.26/logs/
+/pika/logs/
