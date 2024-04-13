@@ -1,0 +1,14 @@
+# Ignore editor-specific files
+.vscode/
+.idea/
+
+# Ignore temporary files
+tmp/
+temp/
+*.tmp
+
+# Ignore version control files
+.git/
+.svn/
+
+# Ignore project files
