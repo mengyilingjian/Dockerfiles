@@ -41,7 +41,7 @@ services:
 #      - app-network
 
   nginx:
-    image: 120.24.160.64:8080/fun-server/nginx@sha256:a819156ec8b046915b3604155ad88c7ceea4ea32daa67477d82c57f515ea89f0
+    image: 120.24.160.64:8080/fun-server/nginx@sha256:62920140d1498805ebb225b5b6e8bb04aab10dea68894050655472b1714dabec
     environment:
       - TZ={TZ} # 设置时区，时区查询：https://www.zeitverschiebung.net/cn/all-time-zones.html
     container_name: nginx1.24.0
@@ -62,7 +62,7 @@ services:
 #      dockerfile: Dockerfile
     volumes:
       #       配置文件
-      - ./nginx/conf/:/usr/local/nginx/conf/:rw
+      - ./nginx/conf/:/www/server/nginx/conf/:rw
       - ./nginx/logs/:/www/wwwlogs/nginx/:rw
       - ../project/os_admin/:/www/wwwroot/project/os_admin/:rw
       - ../project/os_admin/:/www/wwwroot/project/os_api/:rw
@@ -71,11 +71,6 @@ services:
       - ../project/os_poseidon_api/:/www/wwwroot/project/os_poseidon_api/:rw
       - ../project/oscenter/:/www/wwwroot/project/oscenter/:rw
       - ../project/os_zeus/:/www/wwwroot/project/os_zeus/:rw
-    healthcheck:
-      test: [ "CMD-SHELL", "curl --silent --fail http://localhost:${ADMIN_NG_PORT} || exit 1" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
     stdin_open: true
     tty: true
     depends_on:
@@ -96,7 +91,7 @@ services:
 #      context: ./php
 #      dockerfile: php7.3.32/Dockerfile
     volumes:
-      - ./php/php7.3.32/logs/:/www/server/php/var/log
+      - ./php/php7.3.32/logs/:/www/server/php73/var/log
       - ../project/os_admin/:/www/wwwroot/project/os_admin/:rw
       - ../project/os_admin/:/www/wwwroot/project/os_api/:rw
       - ../project/os_im/:/www/wwwroot/project/os_im/:rw
@@ -123,7 +118,7 @@ services:
 #      context: ./php
 #      dockerfile: php8.0.26/Dockerfile
     volumes:
-      - ./php/php8.0.26/logs/:/www/server/php/var/log
+      - ./php/php8.0.26/logs/:/www/server/php80/var/log
       - ../project/os_poseidon_api/:/www/wwwroot/project/os_poseidon_api/:rw
     environment:
       - TZ={TZ}
@@ -143,7 +138,7 @@ services:
     ports:
       - "${PIKA_PORT}:${PIKA_PORT}"
     volumes:
-      - ./pika/logs/:/www/wwwlogs/pika/:rw
+      - ./usr/local/pika/logs/:/www/wwwlogs/pika/:rw
     environment:
       - TZ={TZ}
     networks:

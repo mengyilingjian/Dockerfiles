@@ -7,7 +7,7 @@ LABEL image.version="0.0.1-beta" \
 # 设置时区
 ENV TZ=Asia/Shanghai
 
-ENV INSTALL_DIR=/usr/local/nginx
+ENV INSTALL_DIR=/www/server/nginx
 
 MAINTAINER Eric
 
@@ -22,7 +22,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y iproute2
     && make && make install \
     && ln -sv ${INSTALL_DIR}/sbin/nginx /usr/bin \
     && rm -rf /nginx-1.24.* \
-    &&  apt-get clean && rm -rf /usr/local/nginx/nginx-1.24.0.tar.gz && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf ${INSTALL_DIR}/nginx-1.24.0.tar.gz && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/*
 
 #RUN groupadd  -g 2019 nginx && useradd  -g nginx -s /usr/sbin/nologin -u 2019  nginx && chown -R nginx.nginx /apps/nginx /data/nginx
 
