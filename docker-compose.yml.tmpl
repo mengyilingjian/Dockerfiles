@@ -1,0 +1,135 @@
+version: '3'
+
+services:
+#  openresty:
+#    environment:
+#      - TZ={TZ} # 设置时区，时区查询：https://www.zeitverschiebung.net/cn/all-time-zones.html
+#    container_name: openresty1.25.3.1
+#    # 容器主机名
+#    hostname: openresty_server
+#    ports:
+#      - "8082:8082"
+#      - "8083:8083"
+#      - "8084:8084"
+#      - "8085:8085"
+#      - "8086:8086"
+#      - "8787:8787"
+#      - "8090:8090"
+#      - "9508:9508"
+#      - "9502:9502"
+#    build:
+#      context: ./openresty
+#      dockerfile: Dockerfile
+#    volumes:
+#      #       配置文件
+#      - ./nginx/conf/:/www/server/nginx/conf/:rw
+#      - ./nginx/logs/:/www/wwwlogs/nginx/:rw
+#      - ../project/php_73_api/:/www/wwwroot/project/php_73_api/:rw
+#      - ../project/php_80_api/:/www/wwwroot/project/php_80_api/:rw
+#    stdin_open: true
+#    tty: true
+#    depends_on:
+#      - php73
+#      - php80
+#      - pika
+#    networks:
+#      - app-network
+
+  nginx:
+    image: image_respository_nginx
+    environment:
+      - TZ={TZ} # 设置时区，时区查询：https://www.zeitverschiebung.net/cn/all-time-zones.html
+    container_name: nginx1.24.0
+    # 容器主机名
+    hostname: nginx_server
+    ports:
+      - "${API_NG_PORT}:${API_NG_PORT}"
+      - "${ADMIN_NG_PORT}:${ADMIN_NG_PORT}"
+      - "${POSEIDON_NG_PORT}:${POSEIDON_NG_PORT}"
+      - "${IM_NG_PORT}:${IM_NG_PORT}"
+      - "${ACTIVITY_NG_PORT}:${ACTIVITY_NG_PORT}"
+      - "${OSCENTER_NG_PORT}:${OSCENTER_NG_PORT}"
+      - "${SUPERVISOR_WEB_NG_PORT}:${SUPERVISOR_WEB_NG_PORT}"
+      - "${IM_WEBSOCKET_NG_PORT}:${IM_WEBSOCKET_NG_PORT}"
+      - "${POSEIDON_HYPERF_NG_PORT}:${POSEIDON_HYPERF_NG_PORT}"
+#    build:
+#      context: ./nginx
+#      dockerfile: Dockerfile
+    volumes:
+      #       配置文件
+      - ./nginx/conf/:/www/server/nginx/conf/:rw
+      - ./nginx/logs/:/www/wwwlogs/nginx/:rw
+      - ../project/php_73_api/:/www/wwwroot/project/php_73_api/:rw
+      - ../project/php_80_api/:/www/wwwroot/project/php_80_api/:rw
+    stdin_open: true
+    tty: true
+    depends_on:
+      - php73
+      - php80
+      - pika
+    networks:
+      - app-network
+
+  php73:
+    image: image_respository_php73
+    container_name: php73
+    # 容器主机名
+    hostname: php73_server
+    ports:
+      - "${PHP73_PORT}:${PHP73_PORT}"
+#    build:
+#      context: ./php
+#      dockerfile: php7.3.32/Dockerfile
+    volumes:
+      - ./php/php7.3.32/logs/:/www/server/php73/var/log
+      - ../project/php_73_api/:/www/wwwroot/project/php_73_api/:rw
+    # 打开标准输入，可以接受外部输入
+    stdin_open: true
+    environment:
+      - TZ={TZ}
+    # 伪终端
+    tty: true
+    networks:
+      - app-network
+
+  php80:
+    image: image_respository_php80
+    container_name: php80
+    # 容器主机名
+    hostname: php80_server
+    ports:
+      - "${PHP80_PORT}:${PHP80_PORT}"
+#    build:
+#      context: ./php
+#      dockerfile: php8.0.26/Dockerfile
+    volumes:
+      - ./php/php8.0.26/logs/:/www/server/php80/var/log
+      - ../project/php_80_api/:/www/wwwroot/project/php_80_api/:rw
+    environment:
+      - TZ={TZ}
+    # 打开标准输入，可以接受外部输入
+    stdin_open: true
+    # 伪终端
+    tty: true
+    networks:
+      - app-network
+
+  pika:
+    image: image_respository_pika
+#    build:
+#      context: ./pika
+#      dockerfile: Dockerfile
+    container_name: pika
+    ports:
+      - "${PIKA_PORT}:${PIKA_PORT}"
+    volumes:
+      - ./pika/logs/:/www/wwwlogs/pika/:rw
+    environment:
+      - TZ={TZ}
+    networks:
+      - app-network
+
+networks: #网络组，允许相同组内的每个容器之间相互请求联通
+  app-network:
+    driver: bridge
+

@@ -123,6 +123,8 @@ RUN cd ${DOWNLOAD_DIR} \
         && ./configure --prefix=${PHP_INSTALL_DIR} --with-php-config=${PHP_INSTALL_DIR}/bin/php-config \
         && make -j "$(nproc)" \
         && make install \
+        && sed -i "2i yac.enable=1" ${PHP_INSTALL_DIR}/etc/php.ini \
+        && sed -i "2i yac.enable_cli=1" ${PHP_INSTALL_DIR}/etc/php.ini \
         && sed -i "2i extension=yac.so" ${PHP_INSTALL_DIR}/etc/php.ini \
     # rdkafka
     && cd ${DOWNLOAD_DIR} \
@@ -143,6 +145,7 @@ RUN cd ${DOWNLOAD_DIR} \
         && ./configure --prefix=${PHP_INSTALL_DIR} --with-php-config=${PHP_INSTALL_DIR}/bin/php-config --enable-swoole-curl --enable-cares --enable-http2 --enable-swoole-json \
         && make -j "$(nproc)" \
         && make install \
+        && sed -i "2i swoole.use_shortname='Off'" ${PHP_INSTALL_DIR}/etc/php.ini \
         && sed -i "2i extension=swoole.so" ${PHP_INSTALL_DIR}/etc/php.ini
 
 # 清理不需要的软件包和缓存

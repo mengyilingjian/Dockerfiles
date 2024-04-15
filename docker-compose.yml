@@ -41,7 +41,7 @@ services:
 #      - app-network
 
   nginx:
-    image: localhost:8080/fun-server/nginx@sha256:62920140d1498805ebb225b5b6e8bb04aab10dea68894050655472b1714dabec
+    image: localhost:8080/fun-server/nginx:latest
     environment:
       - TZ={TZ} # 设置时区，时区查询：https://www.zeitverschiebung.net/cn/all-time-zones.html
     container_name: nginx1.24.0
@@ -81,7 +81,7 @@ services:
       - app-network
 
   php73:
-    image: localhost:8080/fun-server/php73@sha256:d8d1f74ce76a0b156f90ba20c6a02bd6a986f7798076ae439d49ed222f9e4281
+    image: localhost:8080/fun-server/php73:latest
     container_name: php73
     # 容器主机名
     hostname: php73_server
@@ -108,7 +108,7 @@ services:
       - app-network
 
   php80:
-    image: localhost:8080/fun-server/php80@sha256:b3a447dda81bdae31f854086de8cb951695f02e85ead461d7254d4c35ba6ca06
+    image: localhost:8080/fun-server/php80:latest
     container_name: php80
     # 容器主机名
     hostname: php80_server
@@ -130,7 +130,7 @@ services:
       - app-network
 
   pika:
-    image: localhost:8080/fun-server/pika@sha256:08420668c925a90ece3d1c833454a195df02079e20ea4d9a6e2c2f06c6f32346
+    image: localhost:8080/fun-server/pika:latest
 #    build:
 #      context: ./pika
 #      dockerfile: Dockerfile
@@ -138,7 +138,7 @@ services:
     ports:
       - "${PIKA_PORT}:${PIKA_PORT}"
     volumes:
-      - ./usr/local/pika/logs/:/www/wwwlogs/pika/:rw
+      - ./pika/logs/:/www/wwwlogs/pika/:rw
     environment:
       - TZ={TZ}
     networks:
