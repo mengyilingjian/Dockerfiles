@@ -37,7 +37,7 @@ RUN set -eux \
     && cp openresty.list /etc/apt/sources.list.d/ \
     && apt-get update \
     && apt-get -y install openresty \
-    && apt-get clean && rm -rf /usr/local/nginx/nginx-1.24.0.tar.gz && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/*
 
 #暴露80端口
 EXPOSE 80/tcp
