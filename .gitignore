@@ -4,3 +4,4 @@
 /php/php7.3.32/logs/
 /php/php8.0.26/logs/
 /pika/logs/
+/docker-compose.yml
